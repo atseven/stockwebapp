@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Stock Prices Prediction</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='narrow-jumbotron.css') }}" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'main.css') }}"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</head>
+
+<body style="background-color: white;">
+
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills float-right">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('thanks') }}">Home <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Stock Prices Prediction</h3>
+        </div>
+
+        <!-- <div>{{labels}}</div> -->
+        <h2>Last 5 rows of Dataset:</h2>
+
+        <table>
+            <tr>
+                {% for col in actual_df_col_names %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in actual_df_row_data %}
+            <tr>
+                {% for col, row_ in zip(actual_df_col_names, row) %}
+                <td>{{row_}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        
+        </table>
+        <br><br>
+        <h2>Data vs {{predColName}}</h2>
+        <canvas id="actualData" width="900" height="400"></canvas>
+        <br><br>
+
+        <h2>Future {{days}} days predictions values:</h2>
+        <table>
+            <tr>
+                {% for col in pred_df_col_names %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in pred_df_row_data %}
+            <tr>
+                {% for col, row_ in zip(pred_df_col_names, row) %}
+                <td>{{row_}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        
+        </table>
+        <br><br>
+
+        <h2>Future {{days}} days predictions plot:</h2>
+        <canvas id="predicteData" width="900" height="400"></canvas>
+
+        <!-- Javascript -->
+        <script>
+            var ctx = document.getElementById("actualData");
+            var scatterPlot = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{ labels | safe}},
+            datasets: [{
+                data: {{ values | safe}},
+                label: "Actual Data Point",
+                borderColor: "#3e95cd",
+                fill: false
+      }
+            ]
+  },
+            options: {
+                responsive: false,
+            }
+});
+
+var ctx2 = document.getElementById("predicteData");
+            var scatterPlot = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: {{ predLabels | safe}},
+            datasets: [{
+                data: {{ predValues | safe}},
+                label: "Predicted Data Point",
+                borderColor: "#03a50e",
+                fill: true
+      }
+            ]
+  },
+            options: {
+                responsive: false,
+            }
+});
+        </script>
+</body>
+
+
+
+
+</html>
