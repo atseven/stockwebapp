@@ -7,10 +7,10 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
 from datetime import datetime
-from plotly import graph_objs as go
+# from plotly import graph_objs as go
 import io
-from prophet import Prophet
-from prophet.plot import plot_plotly, plot_yearly
+from fbprophet import Prophet
+# from prophet.plot import plot_plotly, plot_yearly
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
