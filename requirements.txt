@@ -12,5 +12,5 @@ Pandas>=0.19
 fbprophet==0.7.1
 datetime==4.4
 seaborn==0.11.2
-pystan==2.19.1.1
+pystan
 Cython>=0.22
